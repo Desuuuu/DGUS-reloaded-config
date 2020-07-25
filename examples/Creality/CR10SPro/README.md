@@ -16,12 +16,13 @@ Here are some of the modifications made to this configuration:
 * SD card support
 * Power loss recovery
 * Babystepping (with Z offset adjustment)
-* Increased junction deviation factor
+* Classic jerk
 * S-Curve acceleration
 * Disabled arc support
 
 The following is also enabled to help with OctoPrint setups:
 
+* Higher baudrate (250,000)
 * Host action commands with host prompt support
 * Emergency parser
 * Advanced OK
