@@ -9,6 +9,7 @@ The following configurations are available in the examples folder:
 
 * [Creality CR-10S Pro](/examples/Creality/CR10SPro)
 * [Creality CR-10S Pro V2](/examples/Creality/CR10SProV2)
+* [Ender 5 Plus](/examples/Creality/Ender5Plus)
 
 ## Credits
 [InsanityAutomation](https://github.com/InsanityAutomation) for some of the examples configuration values.
