@@ -1,8 +1,8 @@
 diff --git a/Marlin/Configuration.h b/Marlin/Configuration.h
-index c511429465..ca19a15581 100644
+index c26916d978..1c85402ae5 100644
 --- a/Marlin/Configuration.h
 +++ b/Marlin/Configuration.h
-@@ -70,7 +70,7 @@
+@@ -69,7 +69,7 @@
  // @section info
  
  // Author info of this build printed to the host during boot and M115
@@ -11,7 +11,7 @@ index c511429465..ca19a15581 100644
  //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
  
  /**
-@@ -127,11 +127,11 @@
+@@ -139,11 +139,11 @@
  
  // Choose the name from boards.h that matches your setup
  #ifndef MOTHERBOARD
@@ -25,7 +25,7 @@ index c511429465..ca19a15581 100644
  
  // Printer's unique ID, used by some programs to differentiate between machines.
  // Choose your own or use a service like https://www.uuidgenerator.net/version4
-@@ -423,7 +423,7 @@
+@@ -468,7 +468,7 @@
  #define TEMP_SENSOR_5 0
  #define TEMP_SENSOR_6 0
  #define TEMP_SENSOR_7 0
@@ -33,17 +33,17 @@ index c511429465..ca19a15581 100644
 +#define TEMP_SENSOR_BED 1
  #define TEMP_SENSOR_PROBE 0
  #define TEMP_SENSOR_CHAMBER 0
- 
-@@ -473,7 +473,7 @@
+ #define TEMP_SENSOR_COOLER 0
+@@ -542,7 +542,7 @@
  #define HEATER_5_MAXTEMP 275
  #define HEATER_6_MAXTEMP 275
  #define HEATER_7_MAXTEMP 275
 -#define BED_MAXTEMP      150
 +#define BED_MAXTEMP      120
+ #define CHAMBER_MAXTEMP  60
  
- //===========================================================================
- //============================= PID Settings ================================
-@@ -499,9 +499,9 @@
+ /**
+@@ -579,9 +579,9 @@
      #define DEFAULT_Ki_LIST {   1.08,   1.08 }
      #define DEFAULT_Kd_LIST { 114.00, 114.00 }
    #else
@@ -56,7 +56,7 @@ index c511429465..ca19a15581 100644
    #endif
  #endif // PIDTEMP
  
-@@ -522,7 +522,7 @@
+@@ -602,7 +602,7 @@
   * heater. If your configuration is significantly different than this and you don't understand
   * the issues involved, don't use bed PID until someone else verifies that your hardware works.
   */
@@ -65,7 +65,7 @@ index c511429465..ca19a15581 100644
  
  //#define BED_LIMIT_SWITCHING
  
-@@ -540,9 +540,9 @@
+@@ -620,9 +620,9 @@
  
    // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
    // from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
@@ -78,7 +78,7 @@ index c511429465..ca19a15581 100644
  
    // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
  #endif // PIDTEMPBED
-@@ -572,7 +572,7 @@
+@@ -696,7 +696,7 @@
   * Note: For Bowden Extruders make this large enough to allow load/unload.
   */
  #define PREVENT_LENGTHY_EXTRUDE
@@ -87,7 +87,7 @@ index c511429465..ca19a15581 100644
  
  //===========================================================================
  //======================== Thermal Runaway Protection =======================
-@@ -620,13 +620,16 @@
+@@ -745,19 +745,22 @@
  // Specify here all the endstop connectors that are connected to any endstop or probe.
  // Almost all printers will be using one per axis. Probes will use one or more of the
  // extra connectors. Leave undefined any used for non-endstop and non-probe purposes.
@@ -96,11 +96,17 @@ index c511429465..ca19a15581 100644
 +//#define USE_XMIN_PLUG
 +//#define USE_YMIN_PLUG
  #define USE_ZMIN_PLUG
+ //#define USE_IMIN_PLUG
+ //#define USE_JMIN_PLUG
+ //#define USE_KMIN_PLUG
 -//#define USE_XMAX_PLUG
 -//#define USE_YMAX_PLUG
 +#define USE_XMAX_PLUG
 +#define USE_YMAX_PLUG
  //#define USE_ZMAX_PLUG
+ //#define USE_IMAX_PLUG
+ //#define USE_JMAX_PLUG
+ //#define USE_KMAX_PLUG
  
 +#define Y_STOP_PIN 14
 +#define X_STOP_PIN 3
@@ -108,27 +114,7 @@ index c511429465..ca19a15581 100644
  // Enable pullup for all endstops to prevent a floating state
  #define ENDSTOPPULLUPS
  #if DISABLED(ENDSTOPPULLUPS)
-@@ -678,15 +681,15 @@
-  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
-  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'L6474', 'POWERSTEP01', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
-  */
--//#define X_DRIVER_TYPE  A4988
--//#define Y_DRIVER_TYPE  A4988
--//#define Z_DRIVER_TYPE  A4988
-+#define X_DRIVER_TYPE  A4988
-+#define Y_DRIVER_TYPE  A4988
-+#define Z_DRIVER_TYPE  A4988
- //#define X2_DRIVER_TYPE A4988
- //#define Y2_DRIVER_TYPE A4988
- //#define Z2_DRIVER_TYPE A4988
- //#define Z3_DRIVER_TYPE A4988
- //#define Z4_DRIVER_TYPE A4988
--//#define E0_DRIVER_TYPE A4988
-+#define E0_DRIVER_TYPE A4988
- //#define E1_DRIVER_TYPE A4988
- //#define E2_DRIVER_TYPE A4988
- //#define E3_DRIVER_TYPE A4988
-@@ -711,7 +714,7 @@
+@@ -865,7 +868,7 @@
   *
   * :[2,3,4,5,6,7]
   */
@@ -137,33 +123,33 @@ index c511429465..ca19a15581 100644
  
  // Check for stuck or disconnected endstops during homing moves.
  //#define DETECT_BROKEN_ENDSTOP
-@@ -741,14 +744,14 @@
+@@ -895,14 +898,14 @@
   * Override with M92
-  *                                      X, Y, Z, E0 [, E1[, E2...]]
+  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
   */
--#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 500 }
 +#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 800, 93 }
  
  /**
   * Default Max Feed Rate (mm/s)
   * Override with M203
-  *                                      X, Y, Z, E0 [, E1[, E2...]]
+  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
   */
 -#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
 +#define DEFAULT_MAX_FEEDRATE          { 750, 750, 10, 75 }
  
  //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
  #if ENABLED(LIMITED_MAX_FR_EDITING)
-@@ -761,7 +764,7 @@
+@@ -915,7 +918,7 @@
   * Override with M201
-  *                                      X, Y, Z, E0 [, E1[, E2...]]
+  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
   */
 -#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
 +#define DEFAULT_MAX_ACCELERATION      { 2000, 2000, 100, 1000 }
  
  //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
  #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
-@@ -776,9 +779,9 @@
+@@ -930,9 +933,9 @@
   *   M204 R    Retract Acceleration
   *   M204 T    Travel Acceleration
   */
@@ -176,7 +162,7 @@ index c511429465..ca19a15581 100644
  
  /**
   * Default Jerk limits (mm/s)
-@@ -788,11 +791,11 @@
+@@ -942,11 +945,11 @@
   * When changing speed and direction, if the difference is less than the
   * value set here, it may happen instantaneously.
   */
@@ -187,10 +173,10 @@ index c511429465..ca19a15581 100644
    #define DEFAULT_YJERK 10.0
 -  #define DEFAULT_ZJERK  0.3
 +  #define DEFAULT_ZJERK  0.4
- 
-   //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
- 
-@@ -825,7 +828,7 @@
+   //#define DEFAULT_IJERK  0.3
+   //#define DEFAULT_JJERK  0.3
+   //#define DEFAULT_KJERK  0.3
+@@ -982,7 +985,7 @@
   *
   * See https://github.com/synthetos/TinyG/wiki/Jerk-Controlled-Motion-Explained
   */
@@ -199,7 +185,7 @@ index c511429465..ca19a15581 100644
  
  //===========================================================================
  //============================= Z Probe Options =============================
-@@ -899,7 +902,7 @@
+@@ -1055,7 +1058,7 @@
  /**
   * The BLTouch probe uses a Hall effect sensor and emulates a servo.
   */
@@ -207,8 +193,8 @@ index c511429465..ca19a15581 100644
 +#define BLTOUCH
  
  /**
-  * Pressure sensor with a BLTouch-like interface
-@@ -986,11 +989,11 @@
+  * Touch-MI Probe by hotends.fr
+@@ -1147,11 +1150,11 @@
   *     |    [-]    |
   *     O-- FRONT --+
   */
@@ -221,8 +207,8 @@ index c511429465..ca19a15581 100644
 +#define PROBING_MARGIN 20
  
  // X and Y axis travel speed (mm/min) between probes
- #define XY_PROBE_SPEED (133*60)
-@@ -1010,7 +1013,7 @@
+ #define XY_PROBE_FEEDRATE (133*60)
+@@ -1198,7 +1201,7 @@
   * A total of 2 does fast/slow probes with a weighted average.
   * A total of 3 or more adds more slow probes, taking the average.
   */
@@ -231,7 +217,7 @@ index c511429465..ca19a15581 100644
  //#define EXTRA_PROBING    1
  
  /**
-@@ -1032,7 +1035,7 @@
+@@ -1220,7 +1223,7 @@
  #define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes
  //#define Z_AFTER_PROBING           5 // Z position after probing is done
  
@@ -240,18 +226,27 @@ index c511429465..ca19a15581 100644
  
  // For M851 give a range for adjusting the Z probe offset
  #define Z_PROBE_OFFSET_RANGE_MIN -20
-@@ -1087,7 +1090,7 @@
+@@ -1290,7 +1293,7 @@
  
  // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
  #define INVERT_X_DIR false
 -#define INVERT_Y_DIR true
 +#define INVERT_Y_DIR false
  #define INVERT_Z_DIR false
+ //#define INVERT_I_DIR false
+ //#define INVERT_J_DIR false
+@@ -1311,7 +1314,7 @@
+ // @section homing
  
- // @section extruder
-@@ -1108,22 +1111,22 @@
+ //#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.
+-//#define HOME_AFTER_DEACTIVATE   // Require rehoming after steppers are deactivated. Also enable NO_MOTION_BEFORE_HOMING for extra safety.
++#define HOME_AFTER_DEACTIVATE   // Require rehoming after steppers are deactivated. Also enable NO_MOTION_BEFORE_HOMING for extra safety.
  
- //#define UNKNOWN_Z_NO_RAISE      // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
+ /**
+  * Set Z_IDLE_HEIGHT if the Z-Axis moves on its own when steppers are disabled.
+@@ -1320,15 +1323,15 @@
+  */
+ //#define Z_IDLE_HEIGHT Z_HOME_POS
  
 -//#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
 +#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
@@ -267,10 +262,12 @@ index c511429465..ca19a15581 100644
 +#define X_HOME_DIR 1
 +#define Y_HOME_DIR 1
  #define Z_HOME_DIR -1
- 
+ //#define I_HOME_DIR -1
+ //#define J_HOME_DIR -1
+@@ -1337,8 +1340,8 @@
  // @section machine
  
- // The size of the print bed
+ // The size of the printable area
 -#define X_BED_SIZE 200
 -#define Y_BED_SIZE 200
 +#define X_BED_SIZE 360
@@ -278,16 +275,16 @@ index c511429465..ca19a15581 100644
  
  // Travel limits (mm) after homing, corresponding to endstop positions.
  #define X_MIN_POS 0
-@@ -1131,7 +1134,7 @@
+@@ -1346,7 +1349,7 @@
  #define Z_MIN_POS 0
  #define X_MAX_POS X_BED_SIZE
  #define Y_MAX_POS Y_BED_SIZE
 -#define Z_MAX_POS 200
 +#define Z_MAX_POS 410
- 
- /**
-  * Software Endstops
-@@ -1169,7 +1172,7 @@
+ //#define I_MIN_POS 0
+ //#define I_MAX_POS 50
+ //#define J_MIN_POS 0
+@@ -1402,7 +1405,7 @@
   * RAMPS-based boards use SERVO3_PIN for the first runout sensor.
   * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
   */
@@ -296,7 +293,7 @@ index c511429465..ca19a15581 100644
  #if ENABLED(FILAMENT_RUNOUT_SENSOR)
    #define FIL_RUNOUT_ENABLED_DEFAULT true // Enable the sensor on startup. Override with M412 followed by M500.
    #define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
-@@ -1184,7 +1187,7 @@
+@@ -1454,7 +1457,7 @@
    // After a runout is detected, continue printing this length of filament
    // before executing the runout script. Useful for a sensor at the end of
    // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
@@ -305,7 +302,7 @@ index c511429465..ca19a15581 100644
  
    #ifdef FILAMENT_RUNOUT_DISTANCE_MM
      // Enable this option to use an encoder disc that toggles the runout pin
-@@ -1234,7 +1237,7 @@
+@@ -1504,7 +1507,7 @@
   */
  //#define AUTO_BED_LEVELING_3POINT
  //#define AUTO_BED_LEVELING_LINEAR
@@ -314,16 +311,16 @@ index c511429465..ca19a15581 100644
  //#define AUTO_BED_LEVELING_UBL
  //#define MESH_BED_LEVELING
  
-@@ -1242,7 +1245,7 @@
-  * Normally G28 leaves leveling disabled on completion. Enable
-  * this option to have G28 restore the prior leveling state.
+@@ -1513,7 +1516,7 @@
+  * these options to restore the prior leveling state or to always enable
+  * leveling immediately after G28.
   */
 -//#define RESTORE_LEVELING_AFTER_G28
 +#define RESTORE_LEVELING_AFTER_G28
+ //#define ENABLE_LEVELING_AFTER_G28
  
  /**
-  * Enable detailed logging of G28, G29, M48, etc.
-@@ -1261,7 +1264,7 @@
+@@ -1550,7 +1553,7 @@
    // split up moves into short segments like a Delta. This follows the
    // contours of the bed more closely than edge-to-edge straight moves.
    #define SEGMENT_LEVELED_MOVES
@@ -332,7 +329,7 @@ index c511429465..ca19a15581 100644
  
    /**
     * Enable the G26 Mesh Validation Pattern tool.
-@@ -1281,7 +1284,7 @@
+@@ -1571,7 +1574,7 @@
  #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
  
    // Set the number of grid points per dimension.
@@ -341,7 +338,7 @@ index c511429465..ca19a15581 100644
    #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
  
    // Probe along the Y axis, advancing X after each column
-@@ -1314,7 +1317,7 @@
+@@ -1604,7 +1607,7 @@
    //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
  
    #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
@@ -349,8 +346,8 @@ index c511429465..ca19a15581 100644
 +  #define GRID_MAX_POINTS_X 5       // Don't use more than 15 points per axis, implementation limited.
    #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
  
-   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
-@@ -1330,7 +1333,7 @@
+   //#define UBL_HILBERT_CURVE       // Use Hilbert distribution for less travel when probing multiple points
+@@ -1624,7 +1627,7 @@
    //===========================================================================
  
    #define MESH_INSET 10          // Set Mesh bounds as an inset region of the bed
@@ -359,7 +356,7 @@ index c511429465..ca19a15581 100644
    #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
  
    //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
-@@ -1350,7 +1353,7 @@
+@@ -1644,7 +1647,7 @@
  #endif
  
  // Add a menu item to move between bed corners for manual bed adjustment
@@ -368,7 +365,7 @@ index c511429465..ca19a15581 100644
  
  #if ENABLED(LEVEL_BED_CORNERS)
    #define LEVEL_CORNERS_INSET_LFRB { 30, 30, 30, 30 } // (mm) Left, Front, Right, Back insets
-@@ -1363,7 +1366,7 @@
+@@ -1682,7 +1685,7 @@
   * Commands to execute at the end of G29 probing.
   * Useful to retract or move the Z probe out of the way.
   */
@@ -377,7 +374,7 @@ index c511429465..ca19a15581 100644
  
  // @section homing
  
-@@ -1385,11 +1388,11 @@
+@@ -1707,11 +1710,11 @@
  // - Move the Z probe (or nozzle) to a defined XY point before Z Homing.
  // - Prevent Z homing when the Z probe is outside bed area.
  //
@@ -392,7 +389,7 @@ index c511429465..ca19a15581 100644
  #endif
  
  // Homing speeds (mm/min)
-@@ -1471,12 +1474,12 @@
+@@ -1792,12 +1795,12 @@
   *   M501 - Read settings from EEPROM. (i.e., Throw away unsaved changes)
   *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
   */
@@ -407,7 +404,7 @@ index c511429465..ca19a15581 100644
  #endif
  
  //
-@@ -1523,11 +1526,11 @@
+@@ -1848,11 +1851,11 @@
   *    P1  Raise the nozzle always to Z-park height.
   *    P2  Raise the nozzle by Z-park amount, limited to Z_MAX_POS.
   */
@@ -421,16 +418,16 @@ index c511429465..ca19a15581 100644
    //#define NOZZLE_PARK_X_ONLY          // X move only is required to park
    //#define NOZZLE_PARK_Y_ONLY          // Y move only is required to park
    #define NOZZLE_PARK_Z_RAISE_MIN   2   // (mm) Always raise Z by at least this distance
-@@ -1636,7 +1639,7 @@
+@@ -1974,7 +1977,7 @@
   *
   * View the current statistics with M78.
   */
 -//#define PRINTCOUNTER
 +#define PRINTCOUNTER
- 
- /**
-  * Password
-@@ -1724,7 +1727,7 @@
+ #if ENABLED(PRINTCOUNTER)
+   #define PRINTCOUNTER_SAVE_INTERVAL 60 // (minutes) EEPROM save interval during print
+ #endif
+@@ -2065,7 +2068,7 @@
   * SD Card support is disabled by default. If your controller has an SD slot,
   * you must uncomment the following option or it won't work.
   */
@@ -438,8 +435,8 @@ index c511429465..ca19a15581 100644
 +#define SDSUPPORT
  
  /**
-  * SD CARD: SPI SPEED
-@@ -2169,7 +2172,7 @@
+  * SD CARD: ENABLE CRC
+@@ -2525,7 +2528,7 @@
  //
  // Alternative DGUS LCD firmware
  //
@@ -449,10 +446,10 @@ index c511429465..ca19a15581 100644
  //
  // Touch-screen LCD for Malyan M200/M300 printers
 diff --git a/Marlin/Configuration_adv.h b/Marlin/Configuration_adv.h
-index bcacddd20d..24daa73a68 100644
+index 8de88b9507..d5e3bdc1af 100644
 --- a/Marlin/Configuration_adv.h
 +++ b/Marlin/Configuration_adv.h
-@@ -186,8 +186,8 @@
+@@ -244,8 +244,8 @@
   * THERMAL_PROTECTION_HYSTERESIS and/or THERMAL_PROTECTION_PERIOD
   */
  #if ENABLED(THERMAL_PROTECTION_HOTENDS)
@@ -463,16 +460,16 @@ index bcacddd20d..24daa73a68 100644
  
    //#define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
    #if BOTH(ADAPTIVE_FAN_SLOWING, PIDTEMP)
-@@ -206,7 +206,7 @@
+@@ -264,7 +264,7 @@
     * and/or decrease WATCH_TEMP_INCREASE. WATCH_TEMP_INCREASE should not be set
     * below 2.
     */
--  #define WATCH_TEMP_PERIOD 20                // Seconds
-+  #define WATCH_TEMP_PERIOD 60                // Seconds
+-  #define WATCH_TEMP_PERIOD  20               // Seconds
++  #define WATCH_TEMP_PERIOD  60               // Seconds
    #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
  #endif
  
-@@ -214,13 +214,13 @@
+@@ -272,13 +272,13 @@
   * Thermal Protection parameters for the bed are just as above for hotends.
   */
  #if ENABLED(THERMAL_PROTECTION_BED)
@@ -488,7 +485,7 @@ index bcacddd20d..24daa73a68 100644
    #define WATCH_BED_TEMP_INCREASE               2 // Degrees Celsius
  #endif
  
-@@ -413,7 +413,7 @@
+@@ -485,7 +485,7 @@
  // When first starting the main fan, run it at full speed for the
  // given number of milliseconds.  This gets the fan spinning reliably
  // before setting a PWM value. (Does not work with software PWM for fan on Sanguinololu)
@@ -497,16 +494,16 @@ index bcacddd20d..24daa73a68 100644
  
  // Some coolers may require a non-zero "off" state.
  //#define FAN_OFF_PWM  1
-@@ -658,7 +658,7 @@
+@@ -758,7 +758,7 @@
  
  //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing
  
 -//#define QUICK_HOME                          // If G28 contains XY do a diagonal move first
 +#define QUICK_HOME                          // If G28 contains XY do a diagonal move first
  //#define HOME_Y_BEFORE_X                     // If G28 contains XY home Y before X
+ //#define HOME_Z_FIRST                        // Home Z first. Requires a Z-MIN endstop (not a probe).
  //#define CODEPENDENT_XY_HOMING               // If X/Y can't home without homing Y/X first
- 
-@@ -708,7 +708,7 @@
+@@ -809,7 +809,7 @@
     * differs, a mode set eeprom write will be completed at initialization.
     * Use the option below to force an eeprom write to a V3.1 probe regardless.
     */
@@ -515,16 +512,16 @@ index bcacddd20d..24daa73a68 100644
  
    /**
     * Safety: Activate if connecting a probe with an unknown voltage mode.
-@@ -724,7 +724,7 @@
-    * This feature was designed for Delta's with very fast Z moves however higher speed cartesians may function
-    * If the machine cannot raise the probe fast enough after a trigger, it may enter a fault state.
+@@ -825,7 +825,7 @@
+    * This feature was designed for Deltabots with very fast Z moves; however, higher speed Cartesians
+    * might be able to use it. If the machine can't raise Z fast enough the BLTouch may go into ALARM.
     */
 -  //#define BLTOUCH_HS_MODE
 +  #define BLTOUCH_HS_MODE
  
    // Safety: Enable voltage mode settings in the LCD menu.
    //#define BLTOUCH_LCD_VOLTAGE_MENU
-@@ -838,7 +838,7 @@
+@@ -945,7 +945,7 @@
   * Set DISABLE_INACTIVE_? 'true' to shut down axis steppers after an idle period.
   * The Deactive Time can be overridden with M18 and M84. Set to 0 for No Timeout.
   */
@@ -533,25 +530,16 @@ index bcacddd20d..24daa73a68 100644
  #define DISABLE_INACTIVE_X true
  #define DISABLE_INACTIVE_Y true
  #define DISABLE_INACTIVE_Z true  // Set 'false' if the nozzle could fall onto your printed part!
-@@ -847,7 +847,7 @@
- // If the Nozzle or Bed falls when the Z stepper is disabled, set its resting position here.
- //#define Z_AFTER_DEACTIVATE Z_HOME_POS
+@@ -1265,7 +1265,7 @@
+   //#define LCD_DECIMAL_SMALL_XY
  
--//#define HOME_AFTER_DEACTIVATE  // Require rehoming after steppers are deactivated
-+#define HOME_AFTER_DEACTIVATE  // Require rehoming after steppers are deactivated
+   // Add an 'M73' G-code to set the current percentage
+-  //#define LCD_SET_PROGRESS_MANUALLY
++  #define LCD_SET_PROGRESS_MANUALLY
  
- // Default Minimum Feedrates for printing and travel moves
- #define DEFAULT_MINIMUMFEEDRATE       0.0     // (mm/s) Minimum feedrate. Set with M205 S.
-@@ -1128,7 +1128,7 @@
- //#define LCD_TIMEOUT_TO_STATUS 15000
- 
- // Add an 'M73' G-code to set the current percentage
--//#define LCD_SET_PROGRESS_MANUALLY
-+#define LCD_SET_PROGRESS_MANUALLY
- 
- // Show the E position (filament used) during printing
- //#define LCD_SHOW_E_TOTAL
-@@ -1171,7 +1171,7 @@
+   // Show the E position (filament used) during printing
+   //#define LCD_SHOW_E_TOTAL
+@@ -1318,7 +1318,7 @@
    #define SD_PROCEDURE_DEPTH 1              // Increase if you need more nested M32 calls
  
    #define SD_FINISHED_STEPPERRELEASE true   // Disable steppers when SD Print is finished
@@ -560,16 +548,16 @@ index bcacddd20d..24daa73a68 100644
  
    // Reverse SD sort to show "more recent" files first, according to the card's FAT.
    // Since the FAT gets out of order with usage, SDCARD_SORT_ALPHA is recommended.
-@@ -1181,7 +1181,7 @@
+@@ -1333,7 +1333,7 @@
  
-   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
+   //#define MEDIA_MENU_AT_TOP               // Force the media menu to be listed on the top of the main menu
  
 -  #define EVENT_GCODE_SD_ABORT "G28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
-+  #define EVENT_GCODE_SD_ABORT "G27P2"       // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
++  #define EVENT_GCODE_SD_ABORT "G27P2"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
  
    #if ENABLED(PRINTER_EVENT_LEDS)
      #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
-@@ -1195,9 +1195,9 @@
+@@ -1347,9 +1347,9 @@
     * an option on the LCD screen to continue the print from the last-known
     * point in the file.
     */
@@ -579,10 +567,10 @@ index bcacddd20d..24daa73a68 100644
 -    #define PLR_ENABLED_DEFAULT   false // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
 +    #define PLR_ENABLED_DEFAULT   true // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
      //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
-     //#define POWER_LOSS_RECOVER_ZHOME  // Z homing is needed for proper recovery. 99.9% of the time this should be disabled!
      //#define POWER_LOSS_ZRAISE       2 // (mm) Z axis raise on resume (on power loss with UPS)
-@@ -1251,7 +1251,7 @@
-   #endif
+     //#define POWER_LOSS_PIN         44 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
+@@ -1413,7 +1413,7 @@
+   //#define UTF_FILENAME_SUPPORT
  
    // This allows hosts to request long names for files and folders with M33
 -  //#define LONG_FILENAME_HOST_SUPPORT
@@ -590,7 +578,7 @@ index bcacddd20d..24daa73a68 100644
  
    // Enable this option to scroll long filenames in the SD card menu
    //#define SCROLL_LONG_FILENAMES
-@@ -1276,7 +1276,7 @@
+@@ -1438,7 +1438,7 @@
    /**
     * Auto-report SdCard status with M27 S<seconds>
     */
@@ -599,7 +587,7 @@ index bcacddd20d..24daa73a68 100644
  
    /**
     * Support for USB thumb drives using an Arduino USB Host Shield or
-@@ -1436,14 +1436,14 @@
+@@ -1619,14 +1619,14 @@
  // Additional options for DGUS / DWIN displays
  //
  #if HAS_DGUS_LCD
@@ -614,9 +602,9 @@ index bcacddd20d..24daa73a68 100644
 -  #define DGUS_UPDATE_INTERVAL_MS  500    // (ms) Interval between automatic screen updates
 +  #define DGUS_UPDATE_INTERVAL_MS  1500    // (ms) Interval between automatic screen updates
  
-   #if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
+   #if ANY(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_MKS, DGUS_LCD_UI_HIPRECY)
      #define DGUS_PRINT_FILENAME           // Display the filename during printing
-@@ -1603,11 +1603,11 @@
+@@ -1822,11 +1822,11 @@
   *
   * Warning: Does not respect endstops!
   */
@@ -631,7 +619,7 @@ index bcacddd20d..24daa73a68 100644
    //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
    #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
    //#define BABYSTEP_MILLIMETER_UNITS       // Specify BABYSTEP_MULTIPLICATOR_(XY|Z) in mm instead of micro-steps
-@@ -1626,7 +1626,7 @@
+@@ -1845,7 +1845,7 @@
  
    //#define BABYSTEP_DISPLAY_TOTAL          // Display total babysteps since last G28
  
@@ -640,7 +628,7 @@ index bcacddd20d..24daa73a68 100644
    #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
      //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
      //#define BABYSTEP_ZPROBE_GFX_OVERLAY   // Enable graphical overlay on Z-offset editor
-@@ -1791,7 +1791,7 @@
+@@ -2014,7 +2014,7 @@
  //
  // G2/G3 Arc Support
  //
@@ -649,14 +637,16 @@ index bcacddd20d..24daa73a68 100644
  #if ENABLED(ARC_SUPPORT)
    #define MM_PER_ARC_SEGMENT      1 // (mm) Length (or minimum length) of each arc segment
    //#define ARC_SEGMENTS_PER_R    1 // Max segment length, MM_PER = Min
-@@ -1944,16 +1944,16 @@
+@@ -2170,7 +2170,7 @@
   * Currently handles M108, M112, M410, M876
   * NOTE: Not yet implemented for all platforms.
   */
 -//#define EMERGENCY_PARSER
 +#define EMERGENCY_PARSER
  
- // Bad Serial-connections can miss a received command by sending an 'ok'
+ /**
+  * Realtime Reporting (requires EMERGENCY_PARSER)
+@@ -2196,10 +2196,10 @@
  // Therefore some clients abort after 30 seconds in a timeout.
  // Some other clients start sending commands while receiving a 'wait'.
  // This "wait" is only sent when the buffer is empty. 1 second is a good value here.
@@ -669,9 +659,9 @@ index bcacddd20d..24daa73a68 100644
  
  // Printrun may have trouble receiving long strings all at once.
  // This option inserts short delays between lines of serial output.
-@@ -2087,48 +2087,48 @@
-  * Requires NOZZLE_PARK_FEATURE.
-  * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
+@@ -2347,48 +2347,48 @@
+  *
+  * Enable PARK_HEAD_ON_PAUSE to add the G-code M125 Pause and Park.
   */
 -//#define ADVANCED_PAUSE_FEATURE
 +#define ADVANCED_PAUSE_FEATURE
@@ -734,7 +724,7 @@ index bcacddd20d..24daa73a68 100644
    //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
  #endif
  
-@@ -3159,7 +3159,7 @@
+@@ -3608,7 +3608,7 @@
  //#define NO_WORKSPACE_OFFSETS
  
  // Extra options for the M114 "Current Position" report
@@ -743,7 +733,7 @@ index bcacddd20d..24daa73a68 100644
  //#define M114_REALTIME       // Real current position based on forward kinematics
  //#define M114_LEGACY         // M114 used to synchronize on every call. Enable if needed.
  
-@@ -3261,9 +3261,9 @@
+@@ -3784,9 +3784,9 @@
   * Host Prompt Support enables Marlin to use the host for user prompts so
   * filament runout and other processes can be managed from the host side.
   */
